@@ -17,6 +17,7 @@ pipeline {
                         text = text.replaceAll("%USERNAME%", $username).replaceAll("%PASSWORD%", $password)
                         writeFile file: "init_scripts/cookbook.sql", text: text
                         println text
+                        sh 'ls'
                     }
                 }
             }
@@ -30,7 +31,7 @@ pipeline {
                         --network casa-net \
                         --restart always \
                         -v casa_mysql:/var/lib/mysql \
-                        -v init_scripts:/docker-entrypoint-initdb.d \
+                        -v init_scripts:/docker-entrypoint-initdb.d/:ro \
                         -e MYSQL_ROOT_PASSWORD=$root_password \
                         mysql:latest'
                 }
