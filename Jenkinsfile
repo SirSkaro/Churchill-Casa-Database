@@ -39,7 +39,7 @@ pipeline {
         stage('Execute Scripts') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'casa-mysql-root-credentials', passwordVariable: '$password', usernameVariable: '$username')]) {
-                    sh 'docker exec -d casa-mysql mysql -u $username -p $password < init_scripts/cookbook.sql'
+                    sh 'docker exec -i casa-mysql mysql -u $username -p $password < init_scripts/cookbook.sql'
                 }
             }
         }
