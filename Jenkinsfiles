@@ -9,6 +9,15 @@ pipeline {
                 git 'https://github.com/SirSkaro/Churchill-Casa-Database.git'
             }
         }
+        stage('Inject Credentials') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'cookbook_mysql_user_credentials', passwordVariable: '$password', usernameVariable: '$username')]) {
+                    def text = readFile file: "init_scripts/cookbook.sql"
+                    text = text.replaceAll("%USERNAME%", "${$username}").replaceAll("%PASSWORD%", "${$password}")
+                    writeFile file: "init_scripts/cookbook.sql", text: text
+                }
+            }
+        }
         stage('Deploy') {
             steps {
                 withCredentials([string(credentialsId: 'casa-mysql-root-password', variable: 'root_password')]) {
