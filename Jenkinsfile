@@ -17,7 +17,7 @@ pipeline {
                         text = text.replaceAll("%USERNAME%", $username).replaceAll("%PASSWORD%", $password)
                         writeFile file: "init_scripts/cookbook.sql", text: text
                         
-                        findFiles(glob: 'init_scripts.*.sql').each { sqlScript ->
+                        findFiles(glob: 'init_scripts/*.sql').each { sqlScript ->
                             sh "echo ${item.name}"
                         }
                     }
