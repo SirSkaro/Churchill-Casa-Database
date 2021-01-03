@@ -18,7 +18,7 @@ pipeline {
                         writeFile file: "init_scripts/cookbook.sql", text: text
                         
                         findFiles(glob: 'init_scripts/*.sql').each { sqlScript ->
-                            sh "echo ${item.name}"
+                            sh "echo ${sqlScript.name}"
                         }
                     }
                 }
