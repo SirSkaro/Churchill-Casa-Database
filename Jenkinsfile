@@ -18,7 +18,6 @@ pipeline {
                         writeFile file: "init_scripts/cookbook.sql", text: text
                     }
                 }
-                sh 'cat init_scripts/cookbook.sql'
             }
         }
         stage('Deploy MySQL') {
