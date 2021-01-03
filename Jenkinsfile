@@ -33,6 +33,7 @@ pipeline {
                         -v casa_mysql:/var/lib/mysql \
                         -e MYSQL_ROOT_PASSWORD=$password \
                         mysql:latest'
+                    sh 'sleep 3'
                 }
             }
         }
