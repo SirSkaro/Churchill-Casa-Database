@@ -44,7 +44,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'casa-mysql-root-credentials', passwordVariable: 'password', usernameVariable: 'username')]) {
                     script {
                         findFiles(glob: 'init_scripts/*.sql').each { sqlScript ->
-                            sh 'docker exec -i casa-mysql mysql -u$username -p$password < init_scripts/$sqlScript.name'
+                            sh "docker exec -i casa-mysql mysql -u$username -p$password < init_scripts/${sqlScript.name}"
                         }
                     }
                     //sh 'docker exec -i casa-mysql mysql -u$username -p$password < init_scripts/cookbook.sql'
