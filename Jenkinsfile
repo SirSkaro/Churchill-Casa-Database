@@ -13,7 +13,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'cookbook_mysql_user_credentials', passwordVariable: '$password', usernameVariable: '$username')]) {
                     script {
-                        def text = readFile file: "init_scripts/cookbook.sql"
+                        def text = readFile file: "init_scripts/cookbook.sql" 
                         text = text.replaceAll("%USERNAME%", $username).replaceAll("%PASSWORD%", $password)
                         writeFile file: "init_scripts/cookbook.sql", text: text
                         println text
