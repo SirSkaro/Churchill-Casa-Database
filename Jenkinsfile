@@ -16,10 +16,9 @@ pipeline {
                         def text = readFile file: "init_scripts/cookbook.sql" 
                         text = text.replaceAll("%USERNAME%", $username).replaceAll("%PASSWORD%", $password)
                         writeFile file: "init_scripts/cookbook.sql", text: text
-                        println text
-                        sh 'cat init_scripts/cookbook.sql'
                     }
                 }
+                sh 'cat init_scripts/cookbook.sql'
             }
         }
         stage('Deploy MySQL') {
