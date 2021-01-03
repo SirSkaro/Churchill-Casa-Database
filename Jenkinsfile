@@ -16,10 +16,6 @@ pipeline {
                         def text = readFile file: "init_scripts/cookbook.sql" 
                         text = text.replaceAll("%USERNAME%", $username).replaceAll("%PASSWORD%", $password)
                         writeFile file: "init_scripts/cookbook.sql", text: text
-                        
-                        findFiles(glob: 'init_scripts/*.sql').each { sqlScript ->
-                            sh "echo ${sqlScript.name}"
-                        }
                     }
                 }
             }
@@ -47,7 +43,6 @@ pipeline {
                             sh "docker exec -i casa-mysql mysql -u$username -p$password < init_scripts/${sqlScript.name}"
                         }
                     }
-                    //sh 'docker exec -i casa-mysql mysql -u$username -p$password < init_scripts/cookbook.sql'
                 }
             }
         }
