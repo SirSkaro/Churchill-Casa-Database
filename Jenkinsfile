@@ -11,6 +11,7 @@ pipeline {
         }
         stage('Inject Credentials') {
             steps {
+                sh 'echo "In credentials"'
                 withCredentials([usernamePassword(credentialsId: 'cookbook_mysql_user_credentials', passwordVariable: '$password', usernameVariable: '$username')]) {
                     script {
                         def text = readFile file: "init_scripts/cookbook.sql"
@@ -18,6 +19,10 @@ pipeline {
                         writeFile file: "init_scripts/cookbook.sql", text: text
                     }
                 }
+            }
+            post {
+                success { sh 'echo "it success!"'} 
+                failure { sh 'echo "it failure!"'}
             }
         }
         stage('Deploy') {
