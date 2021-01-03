@@ -17,7 +17,7 @@ pipeline {
                         text = text.replaceAll("%USERNAME%", $username).replaceAll("%PASSWORD%", $password)
                         writeFile file: "init_scripts/cookbook.sql", text: text
                         println text
-                        sh 'ls'
+                        sh 'cat init_scripts/cookbook.sql'
                     }
                 }
             }
