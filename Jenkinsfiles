@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    options {
+        disableConcurrentBuilds()
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/SirSkaro/Churchill-Casa-Database.git'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'docker run -d --name casa-mysql --network casa-net --restart always -v casa_mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD= mysql:latest'
+            }
+        }
+    }
+}
+
+
+        
