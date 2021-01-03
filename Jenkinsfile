@@ -22,19 +22,23 @@ pipeline {
                 }
             }
         }
-        stage('Deploy') {
+        stage('Deploy MySQL') {
             steps {
-                withCredentials([string(credentialsId: 'casa-mysql-root-password', variable: 'root_password')]) {
+                withCredentials([usernamePassword(credentialsId: 'casa-mysql-root-credentials', passwordVariable: '$password', usernameVariable: '$username')]) {
                     sh 'docker stop casa-mysql || true && docker rm casa-mysql || true'
                     sh 'docker run -d \
                         --name casa-mysql \
                         --network casa-net \
                         --restart always \
                         -v casa_mysql:/var/lib/mysql \
-                        -v init_scripts:/docker-entrypoint-initdb.d/:ro \
-                        -e MYSQL_ROOT_PASSWORD=$root_password \
+                        -e MYSQL_ROOT_PASSWORD=$password \
                         mysql:latest'
                 }
+            }
+        }
+        stage('Execute Scripts') {
+            withCredentials([usernamePassword(credentialsId: 'casa-mysql-root-credentials', passwordVariable: '$password', usernameVariable: '$username')]) {
+                sh 'docker exec -d casa-mysql mysql -u $username -p $password < init_scripts/cookbook.sql'
             }
         }
     }
