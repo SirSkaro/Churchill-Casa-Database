@@ -21,10 +21,6 @@ pipeline {
                     }
                 }
             }
-            post {
-                success { sh 'echo "it success!"'} 
-                failure { sh 'echo "it failure!"'}
-            }
         }
         stage('Deploy') {
             steps {
