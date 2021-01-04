@@ -26,6 +26,7 @@ pipeline {
                     sh 'docker stop casa-mysql || true && docker rm casa-mysql || true'
                     sh 'docker run -d \
                         --name casa-mysql \
+                        --hostname casa-mysql \
                         --network casa-net \
                         --restart always \
                         -v casa_mysql:/var/lib/mysql \
