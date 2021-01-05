@@ -30,9 +30,9 @@ pipeline {
                         --network casa-net \
                         --restart always \
                         -v casa_mysql:/var/lib/mysql \
-                        -v config.d:/etc/mysql/conf.d \
                         -e MYSQL_ROOT_PASSWORD=$password \
-                        mysql:latest'
+                        mysql:latest \
+                        --log-bin-trust-function-creators=1'
                     sh 'sleep 3'
                 }
             }
